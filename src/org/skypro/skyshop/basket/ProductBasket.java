@@ -14,30 +14,41 @@ public class ProductBasket {
         products[productCount++] = product;
     }
 
-    public int getTotalPrice() {
+    public int getTotalCost() {
         int total = 0;
-        for (int i = 0; i < productCount; i++) {
-            total += products[i].getPrice();
+        for (Product product : products) {
+            if (product != null) {
+                total += product.getPrice();
+            }
         }
         return total;
     }
 
     public void printContents() {
-        if (productCount == 0) {
-            System.out.println("в корзине пусто");
-            return;
+        boolean isEmpty = true;
+        int specialCount = 0;
+
+        for (Product product : products) {
+            if (product != null) {
+                System.out.println(product.toString());
+                isEmpty = false;
+                if (product.isSpecial()) {
+                    specialCount++;
+                }
+            }
         }
 
-        for (int i = 0; i < productCount; i++) {
-            Product product = products[i];
-            System.out.println(product.getName() + ": " + product.getPrice());
+        if (isEmpty) {
+            System.out.println("в корзине пусто");
+        } else {
+            System.out.println("Итого: " + getTotalCost());
+            System.out.println("Специальных товаров: " + specialCount);
         }
-        System.out.println("Итого: " + getTotalPrice());
     }
 
     public boolean containsProduct(String name) {
-        for (int i = 0; i < productCount; i++) {
-            if (products[i].getName().equals(name)) {
+        for (Product product : products) {
+            if (product != null && product.getName().equals(name)) {
                 return true;
             }
         }
@@ -45,9 +56,8 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (int i = 0; i < productCount; i++) {
+        for (int i = 0; i < products.length; i++) {
             products[i] = null;
         }
-        productCount = 0;
     }
 }
