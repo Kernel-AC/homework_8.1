@@ -1,10 +1,14 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -52,5 +56,25 @@ public class App {
         // 10.поиск товара по имени в пустой корзине
         System.out.println("Есть ли «Груши» в пустой корзине? " + basket.containsProduct("Груша"));
 
+        // 11.создаем один объект типа SearchEngine и добавляем товары
+        SearchEngine searchEngine = new SearchEngine();
+        searchEngine.addAll(apples, pears, oranges, lemons, bananas);
+
+        // 12.создаем несколько объектов типа Article и добавляем их в SearchEngine
+        Article applesArticle = new Article("Статья о яблоках", "Яблоки- это плод, имеет округлую форму, тонкую кожицу обычно зелёного, жёлтого или красного цвета и сочную светлую мякоть белого, розоватого или жёлтого оттенков с сердцевиной, содержащей мелкие тёмно-коричневые или чёрные семечки.");
+
+        Article lemonsArticle = new Article("Статья о лимонах", "Лимоны- это небольшое вечнозелёное плодовое дерево высотой до 5—8 м, с раскидистой или пирамидальной кроной. Встречаются деревья в возрасте 45 лет.");
+
+        searchEngine.addAll(applesArticle, lemonsArticle);
+
+        // 13.функционал поиска с помощью SearchEngine
+        String searchQuery1 = "Яблоки";
+        System.out.println("Поиск \""+ searchQuery1+"\": "+ Arrays.toString(searchEngine.search(searchQuery1)));
+
+        String searchQuery2= "Лимоны";
+        System.out.println("Поиск \""+ searchQuery2+"\": "+ Arrays.toString(searchEngine.search(searchQuery2)));
+
+        String searchQuery3= "Бумага";
+        System.out.println("Поиск \""+ searchQuery3+"\": "+ Arrays.toString(searchEngine.search(searchQuery3)));
     }
 }
