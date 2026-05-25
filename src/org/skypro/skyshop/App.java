@@ -2,11 +2,13 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 
@@ -19,6 +21,24 @@ public class App {
         Product lemons = new DiscountedProduct("Лимоны", 150, 20);
         Product kiwi = new DiscountedProduct("Киви", 250, 35);
 
+        // Демонстрация некорректных данных
+        try {
+            Product invalidProduct = new SimpleProduct("", 150);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            Product invalidPrice = new SimpleProduct("Яблоки", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            Product invalidDiscount = new DiscountedProduct("Лимоны", 150, 150);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
 
         ProductBasket basket = new ProductBasket();
 
@@ -76,5 +96,22 @@ public class App {
 
         String searchQuery3= "Бумага";
         System.out.println("Поиск \""+ searchQuery3+"\": "+ Arrays.toString(searchEngine.search(searchQuery3)));
+        // новый метод поиска
+        // 1-объект найден
+        try {
+            Searchable result = searchEngine.findBestMatch("Яблоки");
+            System.out.println("Найден лучший результат: " + result.getTitle());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка поиска: " + e.getMessage());
+        }
+
+        // 2-объект не найден
+        try {
+            Searchable result = searchEngine.findBestMatch("Бумага");
+            System.out.println("Найден лучший результат: " + result.getTitle());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка поиска: " + e.getMessage());
+        }
     }
+
 }
