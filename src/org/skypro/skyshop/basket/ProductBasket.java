@@ -48,7 +48,7 @@ public class ProductBasket {
 
     public boolean containsProduct(String name) {
         for (Product product : products) {
-            if (product != null && product.getName().equals(name)) {
+            if (product != null && product.getTitle().equals(name)) {
                 return true;
             }
         }
