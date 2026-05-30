@@ -10,7 +10,8 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
+import java.util.List;
+
 
 public class App {
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class App {
         Product lemons = new DiscountedProduct("Лимоны", 150, 20);
         Product kiwi = new DiscountedProduct("Киви", 250, 35);
 
+        System.out.println("\n--- Демонстрация некорректных данных ---");
         // Демонстрация некорректных данных
         try {
             Product invalidProduct = new SimpleProduct("", 150);
@@ -49,7 +51,28 @@ public class App {
         basket.addProduct(bananas);
         basket.addProduct(lemons);
 
-        // добавление продукта в заполненую корзину
+        // Демонстрация удаления продукта
+        System.out.println("\n--- Удаление продукта из корзины ---");
+        List<Product> removedApples = basket.removeProductsByName("Яблоки");
+        System.out.println("Удалённые продукты:");
+        for (Product product : removedApples) {
+            System.out.println("- " + product.getTitle());
+        }
+        System.out.println("Содержимое корзины после удаления:");
+        basket.printContents();
+
+        System.out.println("\n--- Попытка удалить несуществующий продукт ---");
+        List<Product> removedOranges = basket.removeProductsByName("Киви");
+        if (removedOranges.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Удалено: " + removedOranges.size() + " товаров");
+        }
+        System.out.println("Содержимое корзины:");
+        basket.printContents();
+
+        System.out.println("\n--- Добавление продукта в заполненную корзину ---");
+        // добавление продукта в заполненную корзину
         basket.addProduct(kiwi);
 
         // печать содержимого корзины с несколькими товарами
@@ -58,24 +81,29 @@ public class App {
         // получение стоимости корзины с несколькими товарами
         System.out.println("Стоимость корзины: " + basket.getTotalCost());
 
+        System.out.println("\n--- Поиск товара который есть в корзине ---");
         // поиск товара, который есть в корзине
         System.out.println("Есть ли «Яблоки» в корзине? " + basket.containsProduct("Яблоки"));
 
         // 6.поиск товара, которого нет в корзине
         System.out.println("Есть ли «Киви» в корзине? " + basket.containsProduct("Киви"));
 
+        System.out.println("\n--- Очистка корзины ---");
         // 7.очистка корзины
         basket.clearBasket();
 
         // 8.печать содержимого пустой корзины
         basket.printContents();
 
+        System.out.println("\n--- Стоимость пустой корзины ---");
         // 9.получение стоимости пустой корзины
         System.out.println("Стоимость пустой корзины: " + basket.getTotalCost());
 
+        System.out.println("\n--- Поиск товаров по имени в пустой корзине ---");
         // 10.поиск товара по имени в пустой корзине
         System.out.println("Есть ли «Груши» в пустой корзине? " + basket.containsProduct("Груша"));
 
+        System.out.println("\n--- Создаем и добавляем товары ---");
         // 11.создаем один объект типа SearchEngine и добавляем товары
         SearchEngine searchEngine = new SearchEngine();
         searchEngine.addAll(apples, pears, oranges, lemons, bananas);
@@ -89,13 +117,18 @@ public class App {
 
         // 13.функционал поиска с помощью SearchEngine
         String searchQuery1 = "Яблоки";
-        System.out.println("Поиск \""+ searchQuery1+"\": "+ Arrays.toString(searchEngine.search(searchQuery1)));
+        List<Searchable> searchResults1 = searchEngine.search(searchQuery1);
+        System.out.println("Поиск \"" + searchQuery1 + "\": " + searchResults1);
 
-        String searchQuery2= "Лимоны";
-        System.out.println("Поиск \""+ searchQuery2+"\": "+ Arrays.toString(searchEngine.search(searchQuery2)));
+        String searchQuery2 = "Лимоны";
+        List<Searchable> searchResults2 = searchEngine.search(searchQuery2);
+        System.out.println("Поиск \"" + searchQuery2 + "\": " + searchResults2);
 
-        String searchQuery3= "Бумага";
-        System.out.println("Поиск \""+ searchQuery3+"\": "+ Arrays.toString(searchEngine.search(searchQuery3)));
+        String searchQuery3 = "Бумага";
+        List<Searchable> searchResults3 = searchEngine.search(searchQuery3);
+        System.out.println("Поиск \"" + searchQuery3 + "\": " + searchResults3);
+
+        System.out.println("\n--- Новый метод поиска ---");
         // новый метод поиска
         // 1-объект найден
         try {
