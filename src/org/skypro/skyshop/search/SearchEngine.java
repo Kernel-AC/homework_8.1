@@ -2,45 +2,36 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
-import java.sql.SQLOutput;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public final class SearchEngine {
-    private final Searchable[] searchables;
+    private final List<Searchable> searchables;
 
-    private static final int MAX_SEARCH_RESULTS = 5;
-    private static final int NOT_FOUND = -1;
     private static final int DEFAULT_SIZE = 50;
 
     public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
+        this.searchables = new ArrayList<>(size);
     }
 
     public SearchEngine() {
-        this.searchables = new Searchable[DEFAULT_SIZE];
+        this.searchables = new ArrayList<>(DEFAULT_SIZE);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[MAX_SEARCH_RESULTS];
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
 
-        int i = 0;
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.getSearchTerm().contains(query)) {
-                results[i++] = searchable;
-                if (i >= MAX_SEARCH_RESULTS) {
-                    break;
-                }
+                results.add(searchable);
             }
         }
         return results;
     }
 
     public void add(Searchable searchable) {
-        int freeIndex = getFreeIndex();
-        if (freeIndex == NOT_FOUND){
-            System.out.println("Невозможно добавить элемент для поиска");
-            return;
-        }
-        searchables[freeIndex]=searchable;
+        searchables.add(searchable);
     }
 
     public void addAll(Searchable... searchables){
@@ -49,14 +40,7 @@ public final class SearchEngine {
         }
     }
 
-    private int getFreeIndex(){
-        for (int i=0;i<searchables.length;i++){
-            if (searchables[i]==null){
-                return i;
-            }
-        }
-        return 0;
-    }
+
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {
         if (search == null || search.isBlank()) {

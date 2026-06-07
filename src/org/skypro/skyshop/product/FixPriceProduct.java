@@ -1,7 +1,7 @@
 package org.skypro.skyshop.product;
 
 public class FixPriceProduct extends Product {
-    private final static int FIXED_PRICE = 1000;
+    private final static int FIXED_PRICE = 300;
 
     public FixPriceProduct(String name) {
         super(name);
