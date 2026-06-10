@@ -11,6 +11,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class App {
@@ -117,16 +118,16 @@ public class App {
 
         // 13.функционал поиска с помощью SearchEngine
         String searchQuery1 = "Яблоки";
-        List<Searchable> searchResults1 = searchEngine.search(searchQuery1);
-        System.out.println("Поиск \"" + searchQuery1 + "\": " + searchResults1);
+        Map<String, Searchable> searchResults1 = searchEngine.search(searchQuery1);
+        System.out.println("Поиск \"" + searchQuery1 + "\": " + searchResults1.values());
 
         String searchQuery2 = "Лимоны";
-        List<Searchable> searchResults2 = searchEngine.search(searchQuery2);
-        System.out.println("Поиск \"" + searchQuery2 + "\": " + searchResults2);
+        Map<String, Searchable> searchResults2 = searchEngine.search(searchQuery2);
+        System.out.println("Поиск \"" + searchQuery2 + "\": " + searchResults2.values());
 
         String searchQuery3 = "Бумага";
-        List<Searchable> searchResults3 = searchEngine.search(searchQuery3);
-        System.out.println("Поиск \"" + searchQuery3 + "\": " + searchResults3);
+        Map<String, Searchable> searchResults3 = searchEngine.search(searchQuery3);
+        System.out.println("Поиск \"" + searchQuery3 + "\": " + searchResults3.values());
 
         System.out.println("\n--- Новый метод поиска ---");
         // новый метод поиска
