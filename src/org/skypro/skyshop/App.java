@@ -11,7 +11,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
-import java.util.Map;
+import java.util.TreeSet;
 
 
 public class App {
@@ -118,16 +118,16 @@ public class App {
 
         // 13.функционал поиска с помощью SearchEngine
         String searchQuery1 = "Яблоки";
-        Map<String, Searchable> searchResults1 = searchEngine.search(searchQuery1);
-        System.out.println("Поиск \"" + searchQuery1 + "\": " + searchResults1.values());
+        TreeSet<Searchable> searchResults1 = searchEngine.search(searchQuery1);
+        System.out.println("Поиск \"" + searchQuery1 + "\": " + searchResults1);
 
         String searchQuery2 = "Лимоны";
-        Map<String, Searchable> searchResults2 = searchEngine.search(searchQuery2);
-        System.out.println("Поиск \"" + searchQuery2 + "\": " + searchResults2.values());
+        TreeSet<Searchable> searchResults2 = searchEngine.search(searchQuery2);
+        System.out.println("Поиск \"" + searchQuery2 + "\": " + searchResults2);
 
         String searchQuery3 = "Бумага";
-        Map<String, Searchable> searchResults3 = searchEngine.search(searchQuery3);
-        System.out.println("Поиск \"" + searchQuery3 + "\": " + searchResults3.values());
+        TreeSet<Searchable> searchResults3 = searchEngine.search(searchQuery3);
+        System.out.println("Поиск \"" + searchQuery3 + "\": " + searchResults3);
 
         System.out.println("\n--- Новый метод поиска ---");
         // новый метод поиска
